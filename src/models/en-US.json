@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "history facts",
+      "invocationName": "space history",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -22,28 +22,52 @@
         {
           "name": "GetNewFactIntent",
           "samples": [
-            "a fact",
-            "a history fact",
-            "tell me a fact",
-            "tell me a history fact",
-            "give me a fact",
-            "give me a history fact",
-            "tell me trivia"
+            "GetNewFactIntent a fact",
+            "GetNewFactIntent tell me a fact",
+            "GetNewFactIntent give me a fact",
+            "GetNewFactIntent give me something",
+            "GetNewFactIntent get a fact",
+            "GetNewFactIntent get me an interesting fact",
+            "GetNewFactIntent get me an awesome fact",
+            "GetNewFactIntent get a new fact",
+            "GetNewFactIntent get a history fact",
+            "GetNewFactIntent get something fun",
+            "GetNewFactIntent get something interesting",
+            "GetNewFactIntent tell a fact about space",
+            "GetNewFactIntent say something fun",
+            "GetNewFactIntent say something interesting",
+            "GetNewFactIntent say interesting thing",
+            "GetNewFactIntent say new thing"
+
           ],
           "slots": []
         },
         {
-          "name": "ExampleFactIntent",
-          "samples": [
-            "example utterance one",
-            "example utterance two"
-          ],
+          "name": "GetNewYearFactIntent",
           "slots": [
-                {
-                  "name": "EXAMPLE_FACT_NAME",
-                  "type": "AMAZON.FOUR_DIGIT_NUMBER"
-                }
-              ]
+            {
+              "name": "FACT_YEAR",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER"
+            }
+          ],
+          "samples": [
+            "GetNewYearFactIntent give me a space fact from {FACT_YEAR}",
+            "GetNewYearFactIntent what can you tell me about space in {FACT_YEAR}",
+            "GetNewYearFactIntent what happened in space in {FACT_YEAR}",
+            "GetNewYearFactIntent tell me something about space  in {FACT_YEAR}",
+            "GetNewYearFactIntent tell me some space history from {FACT_YEAR}",
+            "GetNewYearFactIntent tell me a fact about space in {FACT_YEAR}",
+            "GetNewYearFactIntent give me a space fact from {FACT_YEAR}",
+            "GetNewYearFactIntent tell me an interesting space fact about {FACT_YEAR}",
+            "GetNewYearFactIntent what can you give me space history from {FACT_YEAR}",
+            "GetNewYearFactIntent space fact from  {FACT_YEAR}",
+            "GetNewYearFactIntent space fact in {FACT_YEAR}",
+            "GetNewYearFactIntent space trivia in {FACT_YEAR}",
+            "GetNewYearFactIntent what have you got for me from space history in {FACT_YEAR}",
+            "GetNewYearFactIntent what history do you know about space in {FACT_YEAR}",
+            "GetNewYearFactIntent name one interesting space fact in {FACT_YEAR}",
+            "GetNewYearFactIntent give me  one interesting space fact in {FACT_YEAR}"
+        ]
           }
         ]
     }

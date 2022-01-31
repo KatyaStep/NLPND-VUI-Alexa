@@ -9,14 +9,14 @@ var schema = JSON.parse(fs.readFileSync('./models/en-US.json', 'utf-8'));
 
 var index = require('../lambda/index');
 var facts = index.facts
-// var utterances_2 = JSON.parse(fs.readFileSync('./models/en-US.json', "utf-8"));
+// var utterances_2 = JSON.parse(fs.readFileSync('./models/solutuion_en-US.json', "utf-8"));
 var intents = schema.interactionModel.languageModel.intents;
 // var facts = require('../facts');
 var utils = require('./utils');
 
 describe("Test Part 1", function () {
 
-    describe("Testing utterance list", function () {
+    describe("Testing solutionutterance list", function () {
         it('should have at least 15 utterances for GetNewFactIntent', function () {
 
             var factIntent = schema.interactionModel.languageModel.intents.find(function(element){

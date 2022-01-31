@@ -5,9 +5,16 @@ const Alexa = require('ask-sdk');
 
 // TODO: Add 10 facts each containing a four-digit year
 const facts = [
-    "The field of AI is considered to have its origin in 1950, with publication of British mathematician Alan Turing's paper, Computing Machinery and Intelligence.",
-    "The term, Artificial Intelligence, was coined in 1956 by mathematician and computer scientist John McCarthy, at Dartmouth College, in New Hampshire.",
-    "Example Fact #3 Placeholder"
+    "October 4, 1957: First artificial satellite, Sputnik I, is launched by Soviet Union.",
+    "April 12, 1961: Soviet cosmonaut Yuri Gagarin completes the first manned space flight, orbiting the Earth in 108 minutes.",
+    "July 20, 1969: Man walks on the moon. Neil Armstrong and Edwin 'Buzz' Aldrin of Apollo XI spend 21 1/2 hours on the moon, 2 1/2 of those outside the capsule.",
+    "Dec. 7-19, 1972: Apollo 17 mission that includes the longest and last stay of man on the moon—74 hours, 59 minutes—by astronauts Eugene Cernan and Harrison Schmitt.",
+    "In 1877, Italian astronomer Giovanni Schiaparelli turned his telescope to Mars and saw signs of a potentially lush world.",
+    "The German V2 was the first rocket to reach space in 1942",
+    "In 1947, fruit flies were launched into space. Scientists wanted to see how they reacted to space travel",
+    "In 1959, the Russian space craft, Luna 2, landed on the moon. It crashed at high speed. Fortunately, it was an unmanned craft with no astronauts inside.",
+    "In 1963, the first woman, Valentina Tereshkova, entered space.",
+    "In 1970, Apollo 13 was headed to the moon when an explosion on board caused serious problems. The astronauts fixed the problems with materials they had on hand and returned home safely."
 ];
 
 const GetNewFactHandler = {
@@ -30,10 +37,89 @@ const GetNewFactHandler = {
 };
 
 
-// TODO: Create a handler for the GetNewYearFactHandler intent
-// Use the handler above as a template
-// ============================================================
 
+
+const GetNewYearFactHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'LaunchRequest'
+      || (request.type === 'IntentRequest'
+        && request.intent.name === 'GetNewYearFactIntent');
+  },
+  handle(handlerInput) {
+    const intent = handlerInput.requestEnvelope.request.intent;
+    var returnRandomFact = false;
+
+    // Check that we were provided with a year
+    if ((typeof intent !== 'undefined') &&
+        (typeof intent.slots !== 'undefined')&&
+        (typeof intent.slots.FACT_YEAR !== 'undefined')){
+
+          var year = handlerInput.requestEnvelope.request.intent.slots.FACT_YEAR.value
+
+          var yearFacts = searchYearFact(facts, year)
+          if (yearFacts.length > 0)
+          {
+
+            var randomFact = randomPhrase(yearFacts);
+
+            // Create speech output
+            var speechOutput =  randomFact;
+          }
+          else
+            returnRandomFact = true
+    }
+    else
+      returnRandomFact = true
+
+    if (returnRandomFact){
+
+      var factArr = facts;
+      var randomFact = randomPhrase(factArr);
+      var speechOutput = randomFact;
+    }
+
+    return handlerInput.responseBuilder
+      .speak(speechOutput)
+      .withSimpleCard(SKILL_NAME, randomFact)
+      .getResponse();
+  },
+};
+
+
+function searchYearFact(facts, year){
+  // Searches 'facts' for a fact containing a specific 'year'
+  // Returns a list of facts for that year, or an empty array
+  // if none is found.
+  var yearsArr = [];
+  for (var i = 0; i < facts.length; i++) {
+      var yearFound = grepFourDigitNumber(facts[i], year);
+      if (yearFound != null) {
+          yearsArr.push(yearFound)
+      }
+  };
+  return yearsArr
+}
+
+function grepFourDigitNumber(myString, year) {
+  // Searches 'myString' for a specific 'year'
+  var txt=new RegExp(year);
+    if (txt.test(myString)) {
+        return myString;
+    }
+    else {
+        return null
+    }
+}
+
+
+function randomPhrase(phraseArr) {
+    // Returns a random phrase
+    // where phraseArr is an array of string phrases
+    var i = 0;
+    i = Math.floor(Math.random() * phraseArr.length);
+    return (phraseArr[i]);
+};
 
 
 
@@ -103,7 +189,7 @@ const skillBuilder = Alexa.SkillBuilders.standard();
 exports.handler = skillBuilder
   .addRequestHandlers(
     GetNewFactHandler,
-    // TODO: Add the handler you create above to this list of handlers
+    GetNewYearFactHandler,
     HelpHandler,
     ExitHandler,
     SessionEndedRequestHandler
